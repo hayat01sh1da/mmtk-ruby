@@ -17,9 +17,6 @@ pub const MMTK_WEAK_CONCURRENT_SET_KIND_GLOBAL_SYMBOLS: u8 = 1;
 
 pub(crate) const RUBY_IMMEDIATE_MASK: usize = 0x07;
 
-#[allow(non_upper_case_globals)] // Match Ruby definition
-pub(crate) const Qundef: VALUE = VALUE(0x24);
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub struct VALUE(pub usize);
@@ -419,6 +416,8 @@ pub struct RubyUpcalls {
     // Memory protection for code memory
     pub before_updating_jit_code: extern "C" fn(),
     pub after_updating_jit_code: extern "C" fn(),
+    // Weak reference processing
+    pub handle_weak_references: extern "C" fn(object: ObjectReference, is_moving: bool),
 }
 
 unsafe impl Sync for RubyUpcalls {}

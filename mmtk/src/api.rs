@@ -9,7 +9,6 @@ use crate::abi;
 use crate::abi::HiddenHeader;
 use crate::abi::RawVecOfObjRef;
 use crate::abi::RubyBindingOptions;
-use crate::abi::VALUE;
 use crate::binding;
 use crate::binding::RubyBinding;
 use crate::mmtk;
@@ -424,6 +423,6 @@ pub extern "C" fn mmtk_current_gc_is_nursery() -> bool {
 }
 
 #[no_mangle]
-pub extern "C" fn mmtk_discover_weak_field(field: *mut VALUE) {
-    crate::binding().weak_proc.discover_weak_field(field)
+pub extern "C" fn mmtk_declare_weak_references(obj: ObjectReference) {
+    crate::binding().weak_proc.declare_weak_references(obj)
 }
