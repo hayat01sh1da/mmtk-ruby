@@ -161,6 +161,9 @@ impl GCWork<Ruby> for ProcessObjFreeCandidates {
         let old_cands = obj_free_candidates.len();
         debug!("Total: {} candidates", old_cands);
 
+        let mut freed = 0usize;
+        let mut elided = 0usize;
+
         // Process obj_free
         let mut new_candidates = Vec::new();
 
@@ -174,14 +177,24 @@ impl GCWork<Ruby> for ProcessObjFreeCandidates {
                     new_object
                 );
                 new_candidates.push(new_object);
-            } else {
+            } else if (upcalls().obj_needs_cleanup_p)(object) {
                 (upcalls().call_obj_free)(object);
+                freed += 1;
+            } else {
+                elided += 1;
             }
         }
 
         let new_cands = new_candidates.len();
         *obj_free_candidates = new_candidates;
-        probe!(mmtk_ruby, process_obj_free_candidates, old_cands, new_cands);
+        probe!(
+            mmtk_ruby,
+            process_obj_free_candidates,
+            old_cands,
+            new_cands,
+            freed,
+            elided,
+        );
     }
 }
 

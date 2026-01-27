@@ -162,13 +162,15 @@ def enrich_meta_extra(log_processor, name, tid, ts, gc, wp, args):
             # Other work packets
 
             case "process_obj_free_candidates":
-                old_candidates, new_candidates = [int(x) for x in args[0:2]]
+                old_candidates, new_candidates, freed, elided = [int(x) for x in args[0:4]]
                 wp["args"] |= {
                     "candidates": {
                         "before": old_candidates,
                         "after": new_candidates,
                         "diff": new_candidates - old_candidates,
                     },
+                    "freed": freed,
+                    "elided": elided,
                 }
 
             case "update_wb_unprotected_objects_list":

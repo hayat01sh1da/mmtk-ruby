@@ -362,6 +362,7 @@ pub struct RubyUpcalls {
     pub is_no_longer_ppp: extern "C" fn(ObjectReference) -> bool,
     pub scan_object_ruby_style: extern "C" fn(object: ObjectReference),
     pub call_gc_mark_children: extern "C" fn(object: ObjectReference),
+    pub obj_needs_cleanup_p: extern "C" fn(object: ObjectReference) -> bool,
     pub call_obj_free: extern "C" fn(object: ObjectReference),
     pub vm_live_bytes: extern "C" fn() -> usize,
     pub has_exivar: extern "C" fn(object: ObjectReference) -> bool,

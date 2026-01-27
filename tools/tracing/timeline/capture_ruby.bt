@@ -90,7 +90,7 @@ usdt:$MMTK:mmtk_ruby:weak_st_par_bins {
 
 usdt:$MMTK:mmtk_ruby:process_obj_free_candidates {
     if (@enable_print) {
-        printf("process_obj_free_candidates,meta,%d,%lu,%lu,%lu\n", tid, nsecs, arg0, arg1);
+        printf("process_obj_free_candidates,meta,%d,%lu,%lu,%lu,%lu,%lu\n", tid, nsecs, arg0, arg1, arg2, arg3);
     }
 }
 
