@@ -183,13 +183,10 @@ def enrich_meta_extra(log_processor, name, tid, ts, gc, wp, args):
                     },
                 }
 
-            case "update_weak_fields":
-                num_fields, live, forwarded = [int(x) for x in args[0:3]]
+            case "process_weak_references":
+                num_objects, live = [int(x) for x in args[0:2]]
                 wp["args"] |= {
-                    "wb_unprotected_objects": {
-                        "num_fields": num_fields,
-                        "live": live,
-                        "forwarded": forwarded,
-                        "cleared": num_fields - live,
-                    },
+                    "num_objects": num_objects,
+                    "live": live,
+                    "dead": num_objects - live,
                 }

@@ -61,30 +61,32 @@ usdt:$MMTK:mmtk_ruby:weak_cs_par_entries_end {
 }
 
 // Weak st table optimization
-
-usdt:$MMTK:mmtk_ruby:weak_st_par_init {
-    if (@enable_print) {
-        printf("weak_st_par_init,meta,%d,%lu,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, arg3, str(arg4, arg5));
-    }
-}
-
-usdt:$MMTK:mmtk_ruby:weak_st_par_final {
-    if (@enable_print) {
-        printf("weak_st_par_final,meta,%d,%lu,%lu,%s\n", tid, nsecs, arg0, str(arg1, arg2));
-    }
-}
-
-usdt:$MMTK:mmtk_ruby:weak_st_par_entries {
-    if (@enable_print) {
-        printf("weak_st_par_entries,meta,%d,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, str(arg3, arg4));
-    }
-}
-
-usdt:$MMTK:mmtk_ruby:weak_st_par_bins {
-    if (@enable_print) {
-        printf("weak_st_par_bins,meta,%d,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, str(arg3, arg4));
-    }
-}
+// We currently don't have weak st_tables to process in parallel.
+// But if we need, we can uncomment the following probes.
+//
+// usdt:$MMTK:mmtk_ruby:weak_st_par_init {
+//     if (@enable_print) {
+//         printf("weak_st_par_init,meta,%d,%lu,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, arg3, str(arg4, arg5));
+//     }
+// }
+// 
+// usdt:$MMTK:mmtk_ruby:weak_st_par_final {
+//     if (@enable_print) {
+//         printf("weak_st_par_final,meta,%d,%lu,%lu,%s\n", tid, nsecs, arg0, str(arg1, arg2));
+//     }
+// }
+// 
+// usdt:$MMTK:mmtk_ruby:weak_st_par_entries {
+//     if (@enable_print) {
+//         printf("weak_st_par_entries,meta,%d,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, str(arg3, arg4));
+//     }
+// }
+// 
+// usdt:$MMTK:mmtk_ruby:weak_st_par_bins {
+//     if (@enable_print) {
+//         printf("weak_st_par_bins,meta,%d,%lu,%lu,%lu,%lu,%s\n", tid, nsecs, arg0, arg1, arg2, str(arg3, arg4));
+//     }
+// }
 
 // Other work packets
 
@@ -100,8 +102,8 @@ usdt:$MMTK:mmtk_ruby:update_wb_unprotected_objects_list {
     }
 }
 
-usdt:$MMTK:mmtk_ruby:update_weak_fields {
+usdt:$MMTK:mmtk_ruby:process_weak_references {
     if (@enable_print) {
-        printf("update_weak_fields,meta,%d,%lu,%lu,%lu,%lu\n", tid, nsecs, arg0, arg1, arg2);
+        printf("process_weak_references,meta,%d,%lu,%lu,%lu\n", tid, nsecs, arg0, arg1);
     }
 }
